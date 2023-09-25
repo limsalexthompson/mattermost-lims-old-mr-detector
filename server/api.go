@@ -4,6 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
+	"github.com/pkg/errors"
+	gitlabLib "github.com/xanzy/go-gitlab"
+	"golang.org/x/oauth2"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
@@ -11,12 +16,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/gorilla/mux"
-	"github.com/pkg/errors"
-	gitlabLib "github.com/xanzy/go-gitlab"
-	"golang.org/x/oauth2"
-	"io/ioutil"
 
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/plugin"
@@ -736,7 +735,6 @@ func (p *Plugin) getChannelSubscriptions(c *UserContext, w http.ResponseWriter, 
 }
 
 func getChannelMembers(channelid string) ([]*model.ChannelMember, error) {
-
 	// Define the Mattermost API endpoint URL
 	apiURL := "https://mattermost.veevadev.com/api/v4"
 

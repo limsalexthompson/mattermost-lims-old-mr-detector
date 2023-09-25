@@ -147,16 +147,15 @@ func (p *Plugin) GetSubscribedChannelsForProject(
 			continue
 		}
 
-		channelMembers, err := getChannelMembers(sub.ChannelID)
+		userIdList := []string{userid}
+		channelMembers, err := p.API.GetChannelMembersByIds(sub.ChannelID, userIdList)
 
 		if err != nil {
 			p.client.Log.Warn("couldn't retrieve members for channel", "err", err.Error())
 		}
 
-		for _, member := range channelMembers {
-			if member.UserId == userid {
-				subsToReturn = append(subsToReturn, sub)
-			}
+		if len(channelMembers) > 0 {
+			subsToReturn = append(subsToReturn, sub)
 		}
 	}
 

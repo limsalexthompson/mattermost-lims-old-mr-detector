@@ -4,6 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
+	"github.com/pkg/errors"
+	gitlabLib "github.com/xanzy/go-gitlab"
+	"golang.org/x/oauth2"
 	"net/http"
 	"net/url"
 	"path"
@@ -11,11 +15,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/gorilla/mux"
-	"github.com/pkg/errors"
-	gitlabLib "github.com/xanzy/go-gitlab"
-	"golang.org/x/oauth2"
 
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/plugin"

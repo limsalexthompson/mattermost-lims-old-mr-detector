@@ -47,7 +47,7 @@ func (*fakeWebhook) ParseGitlabUsernamesFromText(body string) []string {
 	return []string{}
 }
 
-func (f *fakeWebhook) GetSubscribedChannelsForProject(ctx context.Context, namespace, project string, isPublicVisibility bool) []*subscription.Subscription {
+func (f *fakeWebhook) GetSubscribedChannelsForProject(ctx context.Context, namespace, userid, project string, isPublicVisibility bool) []*subscription.Subscription {
 	return f.subs
 }
 

@@ -113,6 +113,7 @@ func (p *Plugin) StoreSubscriptions(s *Subscriptions) error {
 func (p *Plugin) GetSubscribedChannelsForProject(
 	ctx context.Context,
 	namespace string,
+	userid string,
 	project string,
 	isPublicVisibility bool,
 ) []*subscription.Subscription {
@@ -145,7 +146,17 @@ func (p *Plugin) GetSubscribedChannelsForProject(
 		if !isPublicVisibility && !p.permissionToProject(ctx, sub.CreatorID, namespace, project) {
 			continue
 		}
-		subsToReturn = append(subsToReturn, sub)
+
+		userIdList := []string{userid}
+		channelMembers, err := p.API.GetChannelMembersByIds(sub.ChannelID, userIdList)
+
+		if err != nil {
+			p.client.Log.Warn("couldn't retrieve members for channel", "err", err.Error())
+		}
+
+		if len(channelMembers) > 0 {
+			subsToReturn = append(subsToReturn, sub)
+		}
 	}
 
 	return subsToReturn
